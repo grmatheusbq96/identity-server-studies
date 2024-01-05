@@ -1,6 +1,9 @@
+using WebClient.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<ITokenService, TokenService>();
 
 var app = builder.Build();
 
