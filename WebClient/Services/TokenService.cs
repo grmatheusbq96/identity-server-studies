@@ -14,6 +14,7 @@ public class TokenService : ITokenService
         }
     }
 
+    //Criar métodos para diferentes tipos de token (hierarquia, ex: "token gerente", "token aplicação", "token pagamento", "token de extrato")
     public async Task<TokenResponse> GetToken(string scope)
     {
         using (var client = new HttpClient())

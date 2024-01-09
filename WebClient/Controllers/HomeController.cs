@@ -56,5 +56,28 @@ namespace WebClient.Controllers
                 }
             }
         }
+
+        public async Task<IActionResult> WeatherWrite()
+        {
+            var data = new List<WeatherModel>();
+
+            var token = await _tokenService.GetToken("myApi.write");
+
+            using (var client = new HttpClient())
+            {
+                client.SetBearerToken(token.AccessToken);
+                var result = await client.GetAsync("https://localhost:7063/weatherforecast");
+                if (result.IsSuccessStatusCode)
+                {
+                    var model = await result.Content.ReadAsStringAsync();
+                    data = JsonConvert.DeserializeObject<List<WeatherModel>>(model);
+                    return View(data);
+                }
+                else
+                {
+                    throw new Exception("Failed to get Data from API");
+                }
+            }
+        }
     }
 }
